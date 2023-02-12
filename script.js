@@ -1,8 +1,14 @@
 const Gameboard = (() => {
     let board = new Array(9).fill('');
 
+    const updateBoard = (index, symbol) => {
+        board[index] = symbol;
+        console.log(board);
+    };
+
     return {
-        board,
+        // board,
+        updateBoard,
     };
 })();
 
@@ -25,19 +31,12 @@ const Gamecontroller = (() => {
     console.log(nodeArray);
 
     const clickEvent = () => {
-        // for (const node of nodeArray) {
-        //     console.log(node);
-        //     node.addEventListener('click', () => {
-        //         currentPlayer = currentPlayer === player1 ? player2 : player1;
-        //         console.log(currentPlayer.symbol);
-        //     });
-        // }
-
         nodeArray.forEach((node, index) => {
+            // Click on board. Should alternate between X and O.
             node.addEventListener('click', (e) => {
-                // console.log(e.currentTarget);
                 const spanEl = e.currentTarget.querySelector('.symbol');
 
+                // Make sure existing tiles are unclickable.
                 // checks if spanEl is empty
                 if (!spanEl.textContent) {
                     // if empty, sets currentPlayer to the other player
@@ -45,7 +44,9 @@ const Gamecontroller = (() => {
                         currentPlayer === player1 ? player2 : player1;
 
                     spanEl.textContent = `${currentPlayer.symbol}`;
-                    console.log(currentPlayer);
+
+                    // updating and filling board array
+                    Gameboard.updateBoard(index, currentPlayer.symbol);
                 }
             });
         });
@@ -56,6 +57,3 @@ const Gamecontroller = (() => {
     };
 })();
 Gamecontroller.clickEvent();
-
-// Click on board. Should alternate between X and O.
-// Make sure existing tiles are unclickable.
