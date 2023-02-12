@@ -19,22 +19,35 @@ const Gameboard = (() => {
     };
 
     const winCheck = (board) => {
-        // Check rows
-        for (let i = 0; i < 9; i++) {
+        const winCombinations = [
+            //Rows
+            [0, 1, 2],
+            [3, 4, 5],
+            [6, 7, 8],
+            //Columns
+            [0, 3, 6],
+            [1, 4, 7],
+            [2, 5, 8],
+            //Diagonals
+            [0, 4, 8],
+            [2, 4, 6],
+        ];
+
+        for (let i = 0; i < winCombinations.length; i++) {
+            const [a, b, c] = winCombinations[i];
+
             if (
-                board[i] === board[i + 1] &&
-                board[i + 1] === board[i + 2] &&
-                board[i] != ''
+                board[a] === board[b] &&
+                board[b] === board[c] &&
+                board[a] != ''
             ) {
                 return `${
-                    board[i] === 'O'
+                    board[a] === 'O'
                         ? `${player2.name} wins!`
                         : `${player1.name} wins!`
                 }`;
             }
         }
-        // Check columns
-        // Check diagonals
     };
 
     return {
@@ -73,6 +86,7 @@ const Gamecontroller = (() => {
                     // updating and filling board array
                     Gameboard.updateBoard(index, currentPlayer.symbol);
 
+                    // Check for win condition
                     console.log(Gameboard.winCheck(Gameboard.board));
                 }
             });
