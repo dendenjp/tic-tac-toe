@@ -20,15 +20,35 @@ const Gamecontroller = (() => {
     let currentPlayer = player1;
 
     const nodeList = document.querySelectorAll('.cell');
+
     const nodeArray = Array.from(nodeList);
+    console.log(nodeArray);
 
     const clickEvent = () => {
-        for (const node of nodeArray) {
-            node.addEventListener('click', () => {
-                currentPlayer = currentPlayer === player1 ? player2 : player1;
-                console.log(currentPlayer);
+        // for (const node of nodeArray) {
+        //     console.log(node);
+        //     node.addEventListener('click', () => {
+        //         currentPlayer = currentPlayer === player1 ? player2 : player1;
+        //         console.log(currentPlayer.symbol);
+        //     });
+        // }
+
+        nodeArray.forEach((node, index) => {
+            node.addEventListener('click', (e) => {
+                // console.log(e.currentTarget);
+                const spanEl = e.currentTarget.querySelector('.symbol');
+
+                // checks if spanEl is empty
+                if (!spanEl.textContent) {
+                    // if empty, sets currentPlayer to the other player
+                    currentPlayer =
+                        currentPlayer === player1 ? player2 : player1;
+
+                    spanEl.textContent = `${currentPlayer.symbol}`;
+                    console.log(currentPlayer);
+                }
             });
-        }
+        });
     };
 
     return {
